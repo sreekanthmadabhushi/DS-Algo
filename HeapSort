@@ -1,0 +1,45 @@
+def heapify(arr, n, i):
+  if i < 0:
+    return
+  smallest = i
+  left_child = 2*i + 1
+  right_child = 2*i + 2
+  min_ind = smallest
+  if right_child < n:
+    if arr[min_ind] > arr[left_child]:
+      min_ind = left_child
+    if arr[min_ind] > arr[right_child]:
+      min_ind = right_child
+    if min_ind == smallest:
+      return
+    arr[min_ind], arr[smallest] = arr[smallest], arr[min_ind]
+    heapify(arr, n, min_ind)
+  elif left_child <= n:
+    if arr[min_ind] > arr[left_child]:
+      arr[min_ind], arr[left_child] = arr[left_child], arr[min_ind]
+      heapify(arr, n, left_child)
+      
+    else:
+      return
+  else:
+    return
+
+
+def build_heap(arr, n):
+  i = n//2
+  while i > 0:
+    i -= 1
+    heapify(arr, n, i)
+  return arr
+
+lis = list(map(int, input().split()))
+last = len(lis)-1
+lis = build_heap(lis, len(lis))
+while last>=0:
+  lis[last], lis[0] = lis[0], lis[last]
+  x = lis.pop(last)
+  last -= 1
+  heapify(lis, last, 0)
+  lis.append(x)
+print(lis)
+  
